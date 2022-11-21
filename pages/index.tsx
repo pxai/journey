@@ -6,6 +6,7 @@ import prisma from '../lib/prisma';
 import { PollProps } from '../prisma/types';
 import { useState } from 'react';
 import Poll from './components/poll';
+import Nav from './components/nav';
 
 type Props = {
   polls: PollProps[]
@@ -16,6 +17,7 @@ export default function Home(props: Props) {
   return (
     <div className={styles.container}>
       <Header />
+      <Nav />
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <Link href="/">Polls!</Link>
@@ -23,7 +25,7 @@ export default function Home(props: Props) {
         <div>
           {
             polls.map((poll) => (
-              <Poll {...poll} />
+              <Poll key={poll.id} {...poll} />
             ))
           }
         </div>
