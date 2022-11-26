@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // env("PROVIDER")
+  url      = "file:./dev.db" // env("DATABASE_URL")
+}
+
+// schema
+// Notes:
+// To migrate the schema to a db:
+//    npx prisma db push
+// To run the administrator
+//    npx prisma studio
+// Before you access fron Next.js use
+//    npm install @prisma/client
+// Then run (and also Everytime you change the schema:)
+//    npx prisma db push
+//    npx prisma generate
+// Then restart the server!!
+
+model Poll {
+  id        String     @default(cuid()) @id
+  title     String
+  content   String?
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  published Boolean @default(false)
+  author    User?   @relation(fields: [authorId], references: [id])
+  authorId  String?
+  answers   Answer[]
+}
+
+model Answer {
+  id        String     @default(cuid()) @id
+  title     String
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  completed Boolean @default(false)
+  poll    Poll?   @relation(fields: [pollId], references: [id])
+  pollId  String?
+  votes   Vote[]
+}
+
+model Vote {
+  id        String     @default(cuid()) @id
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  answer    Answer?   @relation(fields: [answerId], references: [id])
+  answerId  String?
+  voter   User?   @relation(fields: [voterId], references: [id])
+  voterId  String?
+}
+
+model User {
+  id            String       @default(cuid()) @id
+  name          String?
+  email         String?   @unique
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  polls         Poll[]
+  votes         Vote[]
+  @@map(name: "users")
+}
