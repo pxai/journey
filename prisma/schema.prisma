@@ -38,7 +38,6 @@ model Answer {
   id        String     @default(cuid()) @id
   title     String
   createdAt DateTime  @default(now()) @map(name: "created_at")
-  completed Boolean @default(false)
   poll    Poll?   @relation(fields: [pollId], references: [id])
   pollId  String?
   votes   Vote[]
