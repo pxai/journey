@@ -1,5 +1,4 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import Header from './components/header'
 
@@ -9,7 +8,7 @@ export default function Home() {
       <Header />
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="/">Polls!</a>
+          Welcome to <Link href="/">Polls!</Link>
         </h1>
         <div>
 
@@ -17,7 +16,7 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-          <a href="https://github.com/pxai/nextjspolls">By Pello</a>
+          <Link href="https://github.com/pxai/nextjspolls">By Pello</Link>
       </footer>
     </div>
   )
