@@ -4,7 +4,7 @@ export type PollProps =  {
     content: string;
     published: boolean;
     createdAt: Date;
-    author?: any;
+    author?: UserProps;
     answers: AnswerProps[];
 }
 

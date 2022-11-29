@@ -8,18 +8,26 @@ export default function Nav () {
     const { data: session, status } = useSession();
     const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
-
+    console.log("Session: ", session)
     return (
         <nav>
+            <Link href="/">
+                Home
+            </Link>{' | '}
          { 
             !session ?
                 <Link href="/api/auth/signin" data-active={isActive('/signup')}>
                     Log in
                 </Link>
                 :
-                <Link href="/api/auth/signout" data-active={isActive('/signup')}>
-                    Log out
-                </Link>
+                <>
+                    <Link href="/addpoll">
+                        Add Poll
+                    </Link>{' | '}
+                    <Link href="/api/auth/signout" data-active={isActive('/signup')}>
+                        Log out
+                    </Link>
+                </>
          }
         </nav>
     )

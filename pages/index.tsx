@@ -43,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     where: { published: true },
     include: {
       author: {
-        select: { name: true },
+        select: { name: true, id: true },
       },
       answers: true
     },
