@@ -1,31 +1,28 @@
 import Link from 'next/link'
-import styles from '../styles/Home.module.css'
-import Header from './components/header'
-import { PollProps } from '../prisma/types';
+import styles from '../../../styles/Home.module.css'
+import { PollProps } from '../../../prisma/types';
 import { useState } from 'react';
 import { useFormik } from 'formik';
+import prisma from '../../../lib/prisma';
 import * as yup from 'yup';
 import { useRouter } from 'next/router'
-import Layout from './components/layout';
+import Layout from '../../components/layout';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 type Props = {
-  polls: PollProps[]
+  poll: PollProps
 }
 
-export default function AddPoll(props: Props) {
+export default function EditPoll(props: Props) {
   const router = useRouter()
   const [message, setMessage] = useState(''); // This will be used to show a message if the submission is successful
   const [submitted, setSubmitted] = useState(false);
   const [answers, setAnswers] = useState([{title:''}, {title:''}, {title:''}, {title:''}])
-
+  const { poll } = props;
   const formik = useFormik({
     initialValues: {
-      title: '',
-      content: '', 
-      published: false,
-      answers
+      ...poll
     },
     onSubmit: async (values) => {
       setMessage('Form submitted');
@@ -33,7 +30,7 @@ export default function AddPoll(props: Props) {
     try {
       const body = values;
       await fetch('/api/poll', {
-        method: 'POST',
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       })
@@ -167,11 +164,22 @@ export default function AddPoll(props: Props) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query, locale }) => {
+  const id = String(query.id);
+  const poll = await prisma.poll.findUnique({
+    where: { id },
+    include: {
+      author: {
+          select: { name: true, id: true },
+      },
+      answers: true
+    },
+  });
   return {
-    props: { 
-      ...(await serverSideTranslations(locale, ['common']))
-    }
+      props: { 
+        poll: JSON.parse(JSON.stringify(poll)),
+        ...(await serverSideTranslations(locale, ['common']))
+       }
   };
 };
 

@@ -2,8 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signOut, useSession } from 'next-auth/react';
+import { useTranslation } from 'next-i18next'
 
 export default function Nav () {
+    const { t } = useTranslation();
     const router = useRouter();
     const { data: session, status } = useSession();
     const isActive: (pathname: string) => boolean = (pathname) =>
@@ -12,10 +14,10 @@ export default function Nav () {
     return (
         <nav>
             <Link href="/">
-                Home
+                {t`home`}
             </Link>{' | '}
             <Link href="/polls">
-                Polls
+                {t`polls`}
             </Link>{' | '}
          { 
             !session ?
@@ -25,10 +27,10 @@ export default function Nav () {
                 :
                 <>
                     <Link href="/addpoll">
-                        Add Poll
+                        {t`add_poll`}
                     </Link>{' | '}
                     <Link href="/api/auth/signout" data-active={isActive('/signup')}>
-                        Log out
+                        {t`logout`}
                     </Link>
                 </>
          }

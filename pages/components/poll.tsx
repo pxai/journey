@@ -66,6 +66,7 @@ export default function Poll (poll : PollProps) {
             {
               poll.author.id === session?.user.id && 
                 <div>
+                  <Link href={`/poll/edit/${poll.id}`}>Update it</Link>
                   <span onClick={handleDelete}>Delete it</span>
                 </div>
             }

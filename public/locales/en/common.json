@@ -1,0 +1,11 @@
+{
+    "title": "Welcome to Polls",
+    "home": "Home",
+    "polls": "Polls",
+    "add_poll": "Add Poll",
+    "logout": "Log out",
+    "poll": {
+      "title": "Poll",
+      "content": "content"
+    }
+  }

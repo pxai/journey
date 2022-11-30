@@ -6,6 +6,7 @@ import Header from '../components/header';
 import Nav from '../components/nav';
 import styles from '../../styles/Home.module.css'
 import Link from 'next/link';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 type Props = {
   poll: PollProps;
@@ -28,7 +29,7 @@ export default function PollPage ({ poll }: Props) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query, locale }) => {
   const id = String(query.id);
   const poll = await prisma.poll.findUnique({
     where: { id },
@@ -40,6 +41,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     },
   });
   return {
-      props: { poll: JSON.parse(JSON.stringify(poll)) }
+      props: { 
+        poll: JSON.parse(JSON.stringify(poll)),
+        ...(await serverSideTranslations(locale, ['common']))
+       }
   };
 };
