@@ -2,6 +2,10 @@ import prisma from '../../lib/prisma';
 import { GetServerSideProps } from "next";
 import { PollProps } from "../../prisma/types"
 import Poll from "../components/poll";
+import Header from '../components/header';
+import Nav from '../components/nav';
+import styles from '../../styles/Home.module.css'
+import Link from 'next/link';
 
 type Props = {
   poll: PollProps;
@@ -9,9 +13,18 @@ type Props = {
 
 export default function PollPage ({ poll }: Props) {
   return (
+    <div className={styles.container}>
+    <Header />
+    <Nav />
+    <main className={styles.main}>
       <div>
         <Poll {...poll} />
-      </div>
+      </div> 
+      </main>
+      <footer className={styles.footer}>
+          <Link href="https://github.com/pxai/nextjspolls">By Pello</Link>
+      </footer>
+    </div>
   )
 }
 

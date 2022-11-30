@@ -12,6 +12,24 @@ export default function Poll (poll : PollProps) {
   const router = useRouter();
   const { data: session, status } = useSession();
 
+  const handleVote = async (answerId: string) => {
+    if (!session)
+        alert("You must sign in to vote")
+    else {
+        try {
+            const response = await fetch(`/api/vote`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({answerId, pollId: poll.id}),
+            });
+            const data = await response.json();
+            console.log("voted: ", data)
+          } catch (error) {
+            console.error(" Error on vote: ", error);
+          }
+    }
+  }
+
   const handleDelete = async () => {
     try {
       await fetch(`/api/poll/${poll.id}`, {
@@ -38,7 +56,7 @@ export default function Poll (poll : PollProps) {
             <ul>
                 {
                 poll.answers.map(answer => {
-                    return <Answer key={answer.id} {...answer}/>
+                    return <Answer key={answer.id} answer={answer} handleVote={handleVote}/>
                 })
                 } 
             </ul>

@@ -14,6 +14,9 @@ export default function Nav () {
             <Link href="/">
                 Home
             </Link>{' | '}
+            <Link href="/polls">
+                Polls
+            </Link>{' | '}
          { 
             !session ?
                 <Link href="/api/auth/signin" data-active={isActive('/signup')}>

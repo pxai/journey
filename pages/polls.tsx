@@ -12,7 +12,7 @@ type Props = {
   polls: PollProps[]
 }
 
-export default function Home(props: Props) {
+export default function Polls(props: Props) {
   const [polls, setPolls] = useState(props.polls);
   return (
     <div className={styles.container}>
@@ -20,12 +20,16 @@ export default function Home(props: Props) {
       <Nav />
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <Link href="/">Polls!</Link>
+          Published Polls
         </h1>
         <div>
           {
             polls.map((poll) => (
-              <Poll key={poll.id} {...poll} />
+              <div key={poll.id}>
+                <h3><Link href={`/poll/${poll.id}`}>{poll.title}</Link></h3>
+                <div><i>{poll.content}</i></div>
+                <div>By {poll.author?.name} - {poll.createdAt}</div>
+              </div>
             ))
           }
         </div>
@@ -45,12 +49,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
       author: {
         select: { name: true, id: true },
       },
-      answers: true
+      answers: {
+        include: {
+          votes: true
+        }
+      }
     },
-    orderBy: {
-      createdAt: 'desc',
-    },
-    take: 1,
   });
 
   return {

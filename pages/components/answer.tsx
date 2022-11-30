@@ -1,7 +1,14 @@
+import { useSession } from "next-auth/react";
 import { AnswerProps } from "../../prisma/types"
-
-export default function Answer (answer: AnswerProps) {
+type Props = {
+    answer: AnswerProps;
+    handleVote: Function;
+}
+export default function Answer ({ answer, handleVote }: Props) {
     return (
-        <li>{answer.title}</li>
+        <div>
+            <input type="radio" onChange={() => handleVote(answer.id)} id={`answer_${answer.id}`} name="answer" />
+            <label htmlFor={`answer_${answer.id}`}>{answer.title}</label>
+        </div>
     )
 }

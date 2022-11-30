@@ -34,7 +34,7 @@ export default function AddPoll(props: Props) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
-      });
+      })
       await router.push('/');
     } catch (error) {
       console.error(error);
