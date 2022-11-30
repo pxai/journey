@@ -19,8 +19,6 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         })
         const hasVoted = existingVotes.flatMap(answer => answer.votes).length > 0;
 
-        console.log("Existing votes: ", pollId, hasVoted)
-
         if (hasVoted)  {
             //res.status(400).send();
             return res.status(500).send({ statusText: 'User already voted' });
@@ -31,7 +29,17 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
                     voter: { connect: { email: String(session?.user?.email) } },
                 },
             })
-            return res.json(result)
+
+            const allVotes = await prisma.answer.findMany({
+                where: { pollId },
+                include: {
+                    _count: {
+                      select: { votes: true },
+                    },
+                  },
+            })
+
+            return res.json(allVotes)
         }
     }
 }
