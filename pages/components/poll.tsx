@@ -4,6 +4,8 @@ import Answer from "./answer";
 import { useSession } from 'next-auth/react'; 
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetServerSideProps } from 'next';
 
 type Props = {
     poll: PollProps;
@@ -62,9 +64,9 @@ export default function Poll (poll : PollProps) {
     return (
         <div>
             <h3><Link href={`/poll/${poll.id}`}>{poll.title}</Link></h3>
-            <div className='author'>By {poll.author.name}</div>
+            <div className='author'>By {poll.author?.name}</div>
             {
-              poll.author.id === session?.user.id && 
+              poll.author?.id === session?.user.id && 
                 <div>
                   <Link href={`/poll/edit/${poll.id}`}>Update it</Link>
                   <span onClick={handleDelete}>Delete it</span>
@@ -94,3 +96,11 @@ export default function Poll (poll : PollProps) {
         </div>
     )
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  return {
+    props: { 
+      ...(await serverSideTranslations(locale!, ['common']))
+    }
+  };
+};

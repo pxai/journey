@@ -1,12 +1,10 @@
 import { GetServerSideProps } from 'next';
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
-import Header from './components/header'
 import prisma from '../lib/prisma';
 import { PollProps } from '../prisma/types';
 import { useState } from 'react';
 import Poll from './components/poll';
-import Nav from './components/nav';
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Layout from './components/layout';
@@ -54,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
     props: { 
       polls: JSON.parse(JSON.stringify(polls)),
-      ...(await serverSideTranslations(locale, ['common']))
+      ...(await serverSideTranslations(locale!, ['common']))
     }
   };
 };

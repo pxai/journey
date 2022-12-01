@@ -1,4 +1,5 @@
-import { useSession } from "next-auth/react";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetServerSideProps } from 'next';
 import { AnswerProps } from "../../prisma/types"
 type Props = {
     answer: AnswerProps;
@@ -12,3 +13,11 @@ export default function Answer ({ answer, handleVote }: Props) {
         </div>
     )
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+    return {
+      props: { 
+        ...(await serverSideTranslations(locale!, ['common']))
+      }
+    };
+};

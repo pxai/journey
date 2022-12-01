@@ -1,4 +1,6 @@
 import Head from 'next/head'
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetServerSideProps } from 'next';
 
 export default function Header () {
     return <Head>
@@ -9,3 +11,10 @@ export default function Header () {
 </Head>;
 }
 
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+    return {
+      props: { 
+        ...(await serverSideTranslations(locale!, ['common']))
+      }
+    };
+};

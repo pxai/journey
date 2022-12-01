@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
-import Header from './components/header'
 import { PollProps } from '../prisma/types';
 import { useState } from 'react';
 import { useFormik } from 'formik';
@@ -121,7 +120,7 @@ export default function AddPoll(props: Props) {
                 type="checkbox"
                 name="published"
                 className="form-control"
-                value={formik.values.published}
+                value={`${formik.values.published}`}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
@@ -170,7 +169,7 @@ export default function AddPoll(props: Props) {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
     props: { 
-      ...(await serverSideTranslations(locale, ['common']))
+      ...(await serverSideTranslations(locale!, ['common']))
     }
   };
 };

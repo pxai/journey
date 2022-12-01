@@ -32,6 +32,7 @@ model Poll {
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  String?
   answers   Answer[]
+  @@unique(fields: [id, authorId], name: "id_and_authorId")
 }
 
 model Answer {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useTranslation } from 'next-i18next'
 
 export default function Nav () {
@@ -28,6 +28,9 @@ export default function Nav () {
                 <>
                     <Link href="/addpoll">
                         {t`add_poll`}
+                    </Link>{' | '}
+                    <Link href="/profile" data-active={isActive('/profile')}>
+                        {t`profile`}
                     </Link>{' | '}
                     <Link href="/api/auth/signout" data-active={isActive('/signup')}>
                         {t`logout`}

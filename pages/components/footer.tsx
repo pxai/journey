@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetServerSideProps } from 'next';
 
 export default function Header () {
     return <footer>
@@ -6,3 +8,11 @@ export default function Header () {
     </footer>;
 }
 
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+    return {
+      props: { 
+        ...(await serverSideTranslations(locale!, ['common']))
+      }
+    };
+};

@@ -29,7 +29,7 @@ export default function EditPoll(props: Props) {
       console.log("Form submitted: ", values)
     try {
       const body = values;
-      await fetch('/api/poll', {
+      await fetch(`/api/poll/${poll.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -118,7 +118,7 @@ export default function EditPoll(props: Props) {
                 type="checkbox"
                 name="published"
                 className="form-control"
-                value={formik.values.published}
+                value={`${formik.values.published}`}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
@@ -153,7 +153,7 @@ export default function EditPoll(props: Props) {
             </div>
             <div>
             <button type="submit" className="btn btn-primary">
-              Create
+              Update
             </button>
             </div>
           </div>
@@ -178,7 +178,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, locale }) 
   return {
       props: { 
         poll: JSON.parse(JSON.stringify(poll)),
-        ...(await serverSideTranslations(locale, ['common']))
+        ...(await serverSideTranslations(locale!, ['common']))
        }
   };
 };

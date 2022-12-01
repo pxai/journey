@@ -3,6 +3,7 @@
     "home": "Home",
     "polls": "Polls",
     "add_poll": "Add Poll",
+    "profile": "Profile",
     "logout": "Log out",
     "poll": {
       "title": "Poll",

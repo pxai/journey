@@ -53,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
     props: { 
       polls: JSON.parse(JSON.stringify(polls)),
-      ...(await serverSideTranslations(locale, ['common']))
+      ...(await serverSideTranslations(locale!, ['common']))
      }
   };
 };
