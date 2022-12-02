@@ -4,8 +4,6 @@ import Answer from "./answer";
 import { useSession } from 'next-auth/react'; 
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetServerSideProps } from 'next';
 
 type Props = {
     poll: PollProps;
@@ -97,11 +95,3 @@ export default function Poll (poll : PollProps) {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  return {
-    props: { 
-      ...(await serverSideTranslations(locale!, ['common']))
-    }
-  };
-
-};
