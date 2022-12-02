@@ -103,4 +103,5 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       ...(await serverSideTranslations(locale!, ['common']))
     }
   };
+
 };
