@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import Layout from './components/layout';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { Button } from '@mantine/core';
 
 type Props = {
   polls: PollProps[]
@@ -149,14 +150,10 @@ export default function AddPoll(props: Props) {
                   )
                 })
               }
-              <button onClick={addAnswer} className="btn btn-primary">
-                Add question
-              </button>
+              <Button onClick={addAnswer}>Add question</Button>
             </div>
             <div>
-            <button type="submit" className="btn btn-primary">
-              Create
-            </button>
+            <Button type="submit">Create</Button>
             </div>
           </div>
         </form>

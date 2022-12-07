@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite" // env("PROVIDER")
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -98,7 +98,7 @@ model Session {
 }
 
 model VerificationToken {
-  id         Int      @id @default(autoincrement())
+  id         Int      @id @default(sequence())
   identifier String
   token      String   @unique
   expires    DateTime
