@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
-import { PollProps } from '../prisma/types';
+import { PollProps } from '../../prisma/types';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useRouter } from 'next/router'
 import Layout from './components/layout';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Button } from '@mantine/core';
 
@@ -163,7 +163,7 @@ export default function AddPoll(props: Props) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: { 
       ...(await serverSideTranslations(locale!, ['common']))

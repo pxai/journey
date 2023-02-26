@@ -1,8 +1,8 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import prisma from '../lib/prisma';
-import { PollProps } from '../prisma/types';
+import { PollProps } from '../../prisma/types';
 import { useState } from 'react';
 import Layout from './components/layout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -13,6 +13,7 @@ type Props = {
 
 export default function Polls(props: Props) {
   const [polls, setPolls] = useState(props.polls);
+  console.log("Revalidate polls!!")
   return (
     <Layout>
       <main className={styles.main}>
@@ -35,7 +36,7 @@ export default function Polls(props: Props) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const polls = await prisma.poll.findMany({
     where: { published: true },
     include: {
@@ -54,6 +55,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     props: { 
       polls: JSON.parse(JSON.stringify(polls)),
       ...(await serverSideTranslations(locale!, ['common']))
-     }
+     },
+     revalidate: 30
   };
 };

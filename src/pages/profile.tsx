@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import styles from '../styles/Home.module.css'
 import Layout from './components/layout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -24,7 +24,7 @@ export default function Profile() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: { 
       ...(await serverSideTranslations(locale!, ['common']))

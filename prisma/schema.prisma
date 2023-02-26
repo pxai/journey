@@ -98,7 +98,7 @@ model Session {
 }
 
 model VerificationToken {
-  id         Int      @id @default(sequence())
+  id         Int      @id @default(dbgenerated())
   identifier String
   token      String   @unique
   expires    DateTime
